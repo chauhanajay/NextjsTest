@@ -11,6 +11,8 @@ import { supabase } from "@/lib/supabaseClient";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 
+import UserService from "@/services/UserService";
+
 const signupSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
   password: z.string().min(6, { message: "Password must be at least 6 characters" }),
@@ -41,6 +43,9 @@ export default function SignupPage() {
     if (error) {
       setLoading(false);
       return;
+    }
+    else{
+      UserService.insertData([{email: data.email}])
     }
 
     setSuccessMessage("Signup successful! Check your email for confirmation."); 
